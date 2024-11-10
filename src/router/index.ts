@@ -1,17 +1,17 @@
-import { createElement } from "react";
-import { lazy, type RouteConfig } from "@app/routes";
-import { Navigate } from "@moneko/react";
+import { createElement } from 'react';
+import { lazy, type RouteConfig } from '@app/routes';
+import { Navigate } from '@moneko/react';
 
 const routers: RouteConfig[] = [
   {
-    path: "/",
+    path: '/',
     root: true,
-    element: lazy(() => import(/* webpackChunkName: "layout" */ "@/layout")),
+    element: lazy(() => import(/* webpackChunkName: "layout" */ '@/layout')),
     children: [
       {
-        path: "*",
+        path: '*',
         element: createElement(Navigate, {
-          to: "/chat",
+          to: '/chat',
           replace: true,
         }),
       },

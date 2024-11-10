@@ -1,6 +1,6 @@
-import { extend } from "@moneko/request";
+import { extend } from '@moneko/request';
 
-import { global } from "@/store/global";
+import { global } from '@/store/global';
 
 extend({
   interceptor: {
@@ -8,5 +8,5 @@ extend({
       req.headers!.Authorization = `Bearer ${global.OPENROUTER_API_KEY}`;
     },
   },
-  prefixUrl: "https://openrouter.ai/api/v1",
+  prefixUrl: 'https://openrouter.ai/api/v1',
 });

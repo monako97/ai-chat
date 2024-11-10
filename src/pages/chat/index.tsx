@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useRef } from "react";
-import app from "@app/info";
+import React, { useCallback, useEffect, useRef } from 'react';
+import app from '@app/info';
 import {
   ArrowCircleUpOutlined,
   DrawOutlined,
   FormatIndentIncreaseOutlined,
   LinkSharp,
   StopCircle,
-} from "@mui/icons-material";
+} from '@mui/icons-material';
 import {
   AppBar,
   Avatar,
@@ -17,11 +17,11 @@ import {
   TextField,
   Toolbar,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-import SideMenu from "@/components/SideMenu";
-import { chat } from "@/store/chat";
-import { global } from "@/store/global";
+import SideMenu from '@/components/SideMenu';
+import { chat } from '@/store/chat';
+import { global } from '@/store/global';
 
 const ChatPage = () => {
   const { menuOpen } = global;
@@ -31,7 +31,7 @@ const ChatPage = () => {
   const chatCompletion = useCallback(async () => {
     if (inp.current?.value) {
       chat.send(inp.current.value);
-      inp.current.value = "";
+      inp.current.value = '';
     }
   }, []);
 
@@ -48,24 +48,24 @@ const ChatPage = () => {
     };
   }, [activeId, stream]);
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: 'flex' }}>
       {menuOpen && <SideMenu />}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          display: "flex",
-          flexDirection: "column",
-          bgcolor: "background.default",
-          height: "100vh",
+          display: 'flex',
+          flexDirection: 'column',
+          bgcolor: 'background.default',
+          height: '100vh',
         }}
       >
         <AppBar
           position="sticky"
           sx={{
-            bgcolor: "rgba(255,255,255,0.65)",
-            boxShadow: "none",
-            backdropFilter: "blur(16px)",
+            bgcolor: 'rgba(255,255,255,0.65)',
+            boxShadow: 'none',
+            backdropFilter: 'blur(16px)',
           }}
         >
           <Toolbar
@@ -104,18 +104,18 @@ const ChatPage = () => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Box ref={docu} sx={{ flex: 1, overflowY: "auto", p: 16, gap: 12 }}>
+        <Box ref={docu} sx={{ flex: 1, overflowY: 'auto', p: 16, gap: 12 }}>
           {(activeId &&
             messages[activeId]?.map((msg, i) => {
-              const isUser = msg.role === "user";
+              const isUser = msg.role === 'user';
 
               return (
                 <Container
                   key={`${i}-${msg.created}`}
                   sx={{
-                    display: "flex",
+                    display: 'flex',
                     gap: 2,
-                    flexDirection: isUser ? "row-reverse" : "row",
+                    flexDirection: isUser ? 'row-reverse' : 'row',
                     marginBottom: 2,
                   }}
                 >
@@ -129,7 +129,7 @@ const ChatPage = () => {
                         --text-color: rgb(13, 13, 13);
                         box-shadow: none;
                         --font-size: 1rem;
-                        --font-family: ".AppleSystemUIFont";
+                        --font-family: '.AppleSystemUIFont';
                         --text-secondary: rgb(93, 93, 93);
                         font-weight: 300;
 
@@ -151,7 +151,7 @@ const ChatPage = () => {
           {activeId && !!stream[activeId]?.trim()?.length && (
             <Container
               sx={{
-                display: "flex",
+                display: 'flex',
                 gap: 2,
               }}
             >
@@ -167,7 +167,7 @@ const ChatPage = () => {
           placeholder="Message ChatGPT..."
           inputRef={inp}
           onKeyDown={(e) => {
-            if (e.code === "Enter") {
+            if (e.code === 'Enter') {
               chatCompletion();
             }
           }}
@@ -175,9 +175,9 @@ const ChatPage = () => {
             input: {
               sx: {
                 borderRadius: 50,
-                ml: "20%",
-                mr: "20%",
-                width: "auto",
+                ml: '20%',
+                mr: '20%',
+                width: 'auto',
               },
               startAdornment: (
                 <InputAdornment position="start">

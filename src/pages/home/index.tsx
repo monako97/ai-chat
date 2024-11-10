@@ -1,6 +1,6 @@
-import React from "react";
-import { Link, useOutlet } from "@moneko/react";
-import { Button, Container } from "@mui/material";
+import React from 'react';
+import { Link, useOutlet } from '@moneko/react';
+import { Button, Container } from '@mui/material';
 
 const Home = () => {
   const outlet = useOutlet();

@@ -1,5 +1,5 @@
-import { cancelRequest, request } from "@moneko/request";
-import sso from "shared-store-object";
+import { cancelRequest, request } from '@moneko/request';
+import sso from 'shared-store-object';
 
 interface Message {
   role: string;
@@ -9,7 +9,7 @@ interface Message {
 }
 interface Choice {
   logprobs: null;
-  finish_reason: "stop" | "start";
+  finish_reason: 'stop' | 'start';
   index: number;
   message: Message;
 }
@@ -32,8 +32,8 @@ interface ChatCompletion {
 }
 
 export const chat = sso({
-  activeId: "preset" as string | "preset",
-  error: void 0 as ChatCompletion["error"],
+  activeId: 'preset' as string | 'preset',
+  error: void 0 as ChatCompletion['error'],
   stream: {} as Record<string, string>,
   created: 0,
   messages: {} as Record<string, Message[]>,
@@ -43,9 +43,9 @@ export const chat = sso({
     }
     const { activeId } = chat;
 
-    chat.stream[activeId] = "";
+    chat.stream[activeId] = '';
     const prevMessages = (chat.messages[activeId as string] || []).concat({
-      role: "user",
+      role: 'user',
       content: content,
       created: new Date().getTime(),
     });
@@ -56,18 +56,18 @@ export const chat = sso({
     };
     // 用于累计增量的数据
     let slice_count = 0;
-    let rule = "";
-    let full_text = "";
+    let rule = '';
+    let full_text = '';
 
-    await request("/chat/completions", {
-      method: "POST",
+    await request('/chat/completions', {
+      method: 'POST',
       data: {
-        model: "mistralai/mistral-7b-instruct:free",
+        model: 'mistralai/mistral-7b-instruct:free',
         messages: prevMessages,
         stream: true,
       },
       abortId: activeId,
-      responseType: "text",
+      responseType: 'text',
       onAbort() {
         chat.messages = {
           ...chat.messages,
@@ -75,7 +75,7 @@ export const chat = sso({
         };
         chat.stream = {
           ...chat.stream,
-          [activeId]: "",
+          [activeId]: '',
         };
       },
       onProgress(progress) {
@@ -88,7 +88,7 @@ export const chat = sso({
           };
           chat.stream = {
             ...chat.stream,
-            [activeId]: "",
+            [activeId]: '',
           };
           return;
         }
@@ -97,9 +97,9 @@ export const chat = sso({
         slice_count += next.length;
         next
           .trim()
-          .split("\n")
+          .split('\n')
           .forEach((str) => {
-            if (str.startsWith("data: {")) {
+            if (str.startsWith('data: {')) {
               try {
                 const s = JSON.parse(str.substring(5));
 
@@ -123,11 +123,11 @@ export const chat = sso({
     cancelRequest(chat.activeId);
   },
   async test() {
-    const resp = await request<ChatCompletion>("/chat/completions", {
-      method: "POST",
+    const resp = await request<ChatCompletion>('/chat/completions', {
+      method: 'POST',
       data: {
-        model: "mistralai/mistral-7b-instruct:free",
-        messages: [{ role: "user", content: "hi" }],
+        model: 'mistralai/mistral-7b-instruct:free',
+        messages: [{ role: 'user', content: 'hi' }],
       },
     });
 

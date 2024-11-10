@@ -1,24 +1,17 @@
-import React, { useCallback, useEffect, useRef } from "react";
-import { Navigate, useOutlet } from "@moneko/react";
-import {
-  Alert,
-  AlertTitle,
-  Button,
-  Dialog,
-  Divider,
-  TextField,
-} from "@mui/material";
-import { StyledEngineProvider } from "@mui/material/styles";
-import theme from "neko-ui/es/theme";
+import React, { useCallback, useEffect, useRef } from 'react';
+import { Navigate, useOutlet } from '@moneko/react';
+import { Alert, AlertTitle, Button, Dialog, Divider, TextField } from '@mui/material';
+import { StyledEngineProvider } from '@mui/material/styles';
+import theme from 'neko-ui/es/theme';
 
-import { chat } from "@/store/chat";
-import { global } from "@/store/global";
+import { chat } from '@/store/chat';
+import { global } from '@/store/global';
 
-import "neko-ui/es/button";
-import "neko-ui/es/md";
-import "neko-ui/es/typography";
+import 'neko-ui/es/button';
+import 'neko-ui/es/md';
+import 'neko-ui/es/typography';
 
-theme.setScheme("light");
+theme.setScheme('light');
 
 const Layout = () => {
   const outlet = useOutlet();
