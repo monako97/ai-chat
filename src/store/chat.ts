@@ -1,5 +1,5 @@
-import sso from "shared-store-object";
 import { cancelRequest, request } from "@moneko/request";
+import sso from "shared-store-object";
 
 interface Message {
   role: string;
@@ -42,6 +42,7 @@ export const chat = sso({
       chat.activeId = new Date().getTime().toString(32).substring(2);
     }
     const { activeId } = chat;
+
     chat.stream[activeId] = "";
     const prevMessages = (chat.messages[activeId as string] || []).concat({
       role: "user",
@@ -57,6 +58,7 @@ export const chat = sso({
     let slice_count = 0;
     let rule = "";
     let full_text = "";
+
     await request("/chat/completions", {
       method: "POST",
       data: {
@@ -99,7 +101,8 @@ export const chat = sso({
           .forEach((str) => {
             if (str.startsWith("data: {")) {
               try {
-                let s = JSON.parse(str.substring(5));
+                const s = JSON.parse(str.substring(5));
+
                 full_text += s.choices[0].delta.content;
                 rule = s.choices[0].delta.rule;
                 chat.stream = {
@@ -107,6 +110,7 @@ export const chat = sso({
                   [activeId]: full_text,
                 };
               } catch (error) {
+                // eslint-disable-next-line no-console
                 console.log(error, str);
               }
               chat.created = new Date().getTime();

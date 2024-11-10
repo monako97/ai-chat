@@ -5,7 +5,9 @@
     "main": "index.js",
     "scripts": {
         "start": "mo start site react",
-        "build": "mo build site react"
+        "build": "mo build site react",
+        "eslint": "mo eslint src",
+        "lint": "npm run eslint"
     },
     "author": "moneko",
     "license": "MIT",
@@ -13,7 +15,10 @@
         "@moneko/cli": "2.16.0",
         "@moneko/core": "3.24.1",
         "@moneko/request": "1.0.4",
-        "@types/react": "18.3.12"
+        "@types/react": "18.3.12",
+        "eslint-config-neko": "3.0.0",
+        "eslint-plugin-react": "7.37.2",
+        "eslint-plugin-react-hooks": "5.0.0"
     },
     "dependencies": {
         "@emotion/styled": "11.13.0",

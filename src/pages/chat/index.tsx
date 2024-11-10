@@ -4,17 +4,17 @@ import {
   ArrowCircleUpOutlined,
   DrawOutlined,
   FormatIndentIncreaseOutlined,
-  StopCircle,
   LinkSharp,
+  StopCircle,
 } from "@mui/icons-material";
 import {
-  TextField,
-  InputAdornment,
-  IconButton,
   AppBar,
   Avatar,
   Box,
   Container,
+  IconButton,
+  InputAdornment,
+  TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -42,10 +42,11 @@ const ChatPage = () => {
         top: 999999999999,
       });
     }, 5);
+
     return () => {
       clearTimeout(timer);
     };
-  }, [activeId && stream[activeId]]);
+  }, [activeId, stream]);
   return (
     <Box sx={{ display: "flex" }}>
       {menuOpen && <SideMenu />}

@@ -9,7 +9,7 @@ const Home = () => {
     <Container>
       Home
       <br />
-      <Link to="/chat" >
+      <Link to="/chat">
         <Button>Link chat</Button>
       </Link>
       {outlet}

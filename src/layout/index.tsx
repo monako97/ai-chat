@@ -1,13 +1,20 @@
-import React, { useCallback, useEffect, useRef } from 'react';
-import { Navigate, useOutlet } from '@moneko/react';
-import { Alert, AlertTitle, Button, Dialog, Divider, TextField } from '@mui/material';
-import { StyledEngineProvider } from '@mui/material/styles';
-
-import { chat } from '@/store/chat';
-import { global } from '@/store/global';
-
+import React, { useCallback, useEffect, useRef } from "react";
+import { Navigate, useOutlet } from "@moneko/react";
+import {
+  Alert,
+  AlertTitle,
+  Button,
+  Dialog,
+  Divider,
+  TextField,
+} from "@mui/material";
+import { StyledEngineProvider } from "@mui/material/styles";
 import theme from "neko-ui/es/theme";
-import 'neko-ui/es/button';
+
+import { chat } from "@/store/chat";
+import { global } from "@/store/global";
+
+import "neko-ui/es/button";
 import "neko-ui/es/md";
 import "neko-ui/es/typography";
 
@@ -19,7 +26,7 @@ const Layout = () => {
   const { OPENROUTER_API_KEY, apiModal } = global;
   const inp = useRef<HTMLInputElement>(null);
   const saveApi = useCallback(async () => {
-    global.OPENROUTER_API_KEY = inp.current?.value!;
+    global.OPENROUTER_API_KEY = inp.current?.value as string;
     const resp = await chat.test();
 
     if (resp) {
@@ -27,6 +34,7 @@ const Layout = () => {
     }
     global.closeModal();
   }, []);
+
   useEffect(() => {
     if (error) {
       global.apiModal = true;

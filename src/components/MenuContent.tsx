@@ -1,31 +1,41 @@
-import React from 'react';
-import { DrawOutlined, FormatIndentDecreaseOutlined } from '@mui/icons-material';
-import { IconButton, List, ListItem, ListItemButton, ListItemText, Stack } from '@mui/material';
+import React from "react";
+import {
+  DrawOutlined,
+  FormatIndentDecreaseOutlined,
+} from "@mui/icons-material";
+import {
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Stack,
+} from "@mui/material";
 
-import { chat } from '@/store/chat';
-import { global } from '@/store/global';
+import { chat } from "@/store/chat";
+import { global } from "@/store/global";
 
 export default function MenuContent() {
-  const { messages, activeId, created } = chat;
+  const { messages, activeId } = chat;
   const list = React.useMemo(
     () =>
       Object.keys(messages).map((id, i) => ({
         key: id,
         content: `会话-${i + 1}`,
       })),
-    [messages, activeId, created],
+    [messages],
   );
 
   return (
-    <Stack sx={{ flexGrow: 1, justifyContent: 'space-between' }}>
+    <Stack sx={{ flexGrow: 1, justifyContent: "space-between" }}>
       <div
         style={{
-          display: 'flex',
-          position: 'sticky',
+          display: "flex",
+          position: "sticky",
           padding: 4,
           top: 0,
-          background: 'rgba(255,255,255,0.65)',
-          backdropFilter: 'blur(16px)',
+          background: "rgba(255,255,255,0.65)",
+          backdropFilter: "blur(16px)",
           zIndex: 1,
         }}
       >
