@@ -1,0 +1,9 @@
+{
+  "extends": "@moneko/react/base",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+    "name": "ai-chat",
+    "version": "1.0.0",
+    "description": "ChatGPT 也可能会犯错。请核查重要信息。",
+    "main": "index.js",
+    "scripts": {
+        "start": "mo start site react",
+        "build": "mo build site react"
+    },
+    "author": "moneko",
+    "license": "MIT",
+    "devDependencies": {
+        "@moneko/cli": "2.16.0",
+        "@moneko/core": "3.24.1",
+        "@moneko/request": "1.0.4",
+        "@types/react": "18.3.12"
+    },
+    "dependencies": {
+        "@emotion/styled": "11.13.0",
+        "@moneko/common": "1.5.4",
+        "@moneko/react": "1.6.9",
+        "@mui/icons-material": "^6.1.6",
+        "@mui/material": "^6.1.6",
+        "@mui/styled-engine": "^6.1.6",
+        "neko-ui": "2.8.24",
+        "react": "18.3.1",
+        "react-dom": "18.3.1",
+        "shared-store-object": "1.1.4"
+    }
+}
