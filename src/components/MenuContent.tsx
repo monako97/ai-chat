@@ -7,14 +7,6 @@ import { global } from '@/store/global';
 
 export default function MenuContent() {
   const { messages, activeId } = chat;
-  const list = React.useMemo(
-    () =>
-      Object.keys(messages).map((id, i) => ({
-        key: id,
-        content: `会话-${i + 1}`,
-      })),
-    [messages],
-  );
 
   return (
     <Stack sx={{ flexGrow: 1, justifyContent: 'space-between' }}>
@@ -38,22 +30,27 @@ export default function MenuContent() {
         </IconButton>
       </div>
       <List dense>
-        {list.map((item) => (
-          <ListItem key={item.key} disablePadding>
-            <ListItemButton
-              selected={item.key === activeId}
-              sx={{ ml: 1 }}
-              style={{
-                borderRadius: 8,
-              }}
-              onClick={() => {
-                chat.activeId = item.key;
-              }}
-            >
-              <ListItemText primary={item.content} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {Object.keys(messages)
+          .map((id, i) => ({
+            key: id,
+            content: `会话-${i + 1}`,
+          }))
+          .map((item) => (
+            <ListItem key={item.key} disablePadding>
+              <ListItemButton
+                selected={item.key === activeId}
+                sx={{ ml: 1 }}
+                style={{
+                  borderRadius: 8,
+                }}
+                onClick={() => {
+                  chat.activeId = item.key;
+                }}
+              >
+                <ListItemText primary={item.content} />
+              </ListItemButton>
+            </ListItem>
+          ))}
       </List>
     </Stack>
   );
