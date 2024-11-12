@@ -163,9 +163,11 @@ const ChatPage = () => {
             </Container>
           )}
         </Box>
-        {error?.message && <Alert variant="filled" severity="error">
-          {error.code}: {error.message}
-        </Alert>}
+        {error?.message && (
+          <Alert variant="filled" severity="error">
+            {error.code}: {error.message}
+          </Alert>
+        )}
         <TextField
           fullWidth
           placeholder="Message ChatGPT..."
