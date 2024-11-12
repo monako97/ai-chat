@@ -9,6 +9,7 @@ import {
 } from '@mui/icons-material';
 import {
   Alert,
+  AlertTitle,
   AppBar,
   Avatar,
   Box,
@@ -163,9 +164,10 @@ const ChatPage = () => {
             </Container>
           )}
         </Box>
-        {error?.message && (
+        {error && (
           <Alert variant="filled" severity="error">
-            {error.code}: {error.message}
+            <AlertTitle>{error.code}</AlertTitle>
+            {error.message}
           </Alert>
         )}
         <TextField

@@ -1,4 +1,4 @@
-import { cancelRequest, request } from '@moneko/request';
+import { cancelRequest, request, type ResponseBody } from '@moneko/request';
 import sso from 'shared-store-object';
 
 interface Message {
@@ -59,29 +59,18 @@ export const chat = sso({
     let rule = '';
     let full_text = '';
 
-    await request('/chat/completions', {
-      method: 'POST',
-      data: {
-        model: 'mistralai/mistral-7b-instruct:free',
-        messages: prevMessages,
-        stream: true,
-      },
-      abortId: activeId,
-      responseType: 'text',
-      onAbort() {
-        chat.messages = {
-          ...chat.messages,
-          [activeId]: prevMessages.concat({ role: rule, content: full_text }),
-        };
-        chat.stream = {
-          ...chat.stream,
-          [activeId]: '',
-        };
-      },
-      onProgress(progress) {
-        const xhr = progress.target as XMLHttpRequest;
-
-        if (xhr.readyState === xhr.DONE) {
+    const resp = await request<string | (ResponseBody & { error: ChatCompletion['error'] })>(
+      '/chat/completions',
+      {
+        method: 'POST',
+        data: {
+          model: 'mistralai/mistral-7b-instruct:free',
+          messages: prevMessages,
+          stream: true,
+        },
+        abortId: activeId,
+        responseType: 'text',
+        onAbort() {
           chat.messages = {
             ...chat.messages,
             [activeId]: prevMessages.concat({ role: rule, content: full_text }),
@@ -90,34 +79,52 @@ export const chat = sso({
             ...chat.stream,
             [activeId]: '',
           };
-          return;
-        }
-        const next = xhr.responseText.slice(slice_count); // 只处理新增的数据
+        },
+        onProgress(progress) {
+          const xhr = progress.target as XMLHttpRequest;
 
-        slice_count += next.length;
-        next
-          .trim()
-          .split('\n')
-          .forEach((str) => {
-            if (str.startsWith('data: {')) {
-              try {
-                const s = JSON.parse(str.substring(5));
+          if (xhr.readyState === xhr.DONE) {
+            chat.messages = {
+              ...chat.messages,
+              [activeId]: prevMessages.concat({ role: rule, content: full_text }),
+            };
+            chat.stream = {
+              ...chat.stream,
+              [activeId]: '',
+            };
+            return;
+          }
+          const next = xhr.responseText.slice(slice_count); // 只处理新增的数据
 
-                full_text += s.choices[0].delta.content;
-                rule = s.choices[0].delta.rule;
-                chat.stream = {
-                  ...chat.stream,
-                  [activeId]: full_text,
-                };
-              } catch (error) {
-                // eslint-disable-next-line no-console
-                console.log(error, str);
+          slice_count += next.length;
+          next
+            .trim()
+            .split('\n')
+            .forEach((str) => {
+              if (str.startsWith('data: {')) {
+                try {
+                  const s = JSON.parse(str.substring(5));
+
+                  full_text += s.choices[0].delta.content;
+                  rule = s.choices[0].delta.rule;
+                  chat.stream = {
+                    ...chat.stream,
+                    [activeId]: full_text,
+                  };
+                } catch (error) {
+                  // eslint-disable-next-line no-console
+                  console.log(error, str);
+                }
+                chat.created = new Date().getTime();
               }
-              chat.created = new Date().getTime();
-            }
-          });
+            });
+        },
       },
-    });
+    );
+
+    if (typeof resp === 'object') {
+      chat.error = resp.error;
+    }
   },
   unSend() {
     cancelRequest(chat.activeId);
