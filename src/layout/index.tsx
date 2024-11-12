@@ -15,22 +15,18 @@ theme.setScheme('light');
 
 const Layout = () => {
   const outlet = useOutlet();
-  const { error } = chat;
-  const { OPENROUTER_API_KEY, apiModal } = global;
+  const { error, OPENROUTER_API_KEY, apiModal } = global;
   const inp = useRef<HTMLInputElement>(null);
   const saveApi = useCallback(async () => {
     global.OPENROUTER_API_KEY = inp.current?.value as string;
-    const resp = await chat.test();
-
-    if (resp) {
-      return;
-    }
-    global.closeModal();
+    await chat.test();
   }, []);
 
   useEffect(() => {
     if (error) {
       global.apiModal = true;
+    } else {
+      global.apiModal = false;
     }
   }, [error]);
   return (

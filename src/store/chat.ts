@@ -1,5 +1,6 @@
-import { cancelRequest, request, type ResponseBody } from '@moneko/request';
+import { cancelRequest, request } from '@moneko/request';
 import sso from 'shared-store-object';
+import { global } from './global';
 
 interface Message {
   role: string;
@@ -33,7 +34,6 @@ interface ChatCompletion {
 
 export const chat = sso({
   activeId: 'preset' as string | 'preset',
-  error: void 0 as ChatCompletion['error'],
   stream: {} as Record<string, string>,
   created: 0,
   messages: {} as Record<string, Message[]>,
@@ -59,7 +59,7 @@ export const chat = sso({
     let rule = '';
     let full_text = '';
 
-    const resp = await request<string | (ResponseBody & { error: ChatCompletion['error'] })>(
+    await request(
       '/chat/completions',
       {
         method: 'POST',
@@ -121,25 +121,23 @@ export const chat = sso({
         },
       },
     );
-
-    if (typeof resp === 'object') {
-      chat.error = resp.error;
-    }
   },
   unSend() {
     cancelRequest(chat.activeId);
   },
   async test() {
-    const resp = await request<ChatCompletion>('/chat/completions', {
+    await request<ChatCompletion>('/chat/completions', {
       method: 'POST',
       data: {
         model: 'mistralai/mistral-7b-instruct:free',
         messages: [{ role: 'user', content: 'hi' }],
       },
+    }).then((resp) => {
+      if (!resp.error) {
+        global.error = void 0;
+        global.closeModal();
+      }
     });
-
-    chat.error = resp.error;
-    return resp.error;
   },
   newChoice() {
     const id = new Date().getTime().toString(32).substring(2);

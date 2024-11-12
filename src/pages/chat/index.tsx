@@ -8,8 +8,6 @@ import {
   StopCircle,
 } from '@mui/icons-material';
 import {
-  Alert,
-  AlertTitle,
   AppBar,
   Avatar,
   Box,
@@ -27,7 +25,7 @@ import { global } from '@/store/global';
 
 const ChatPage = () => {
   const { menuOpen } = global;
-  const { messages, activeId, stream, error } = chat;
+  const { messages, activeId, stream } = chat;
   const inp = useRef<HTMLInputElement>(null);
   const docu = useRef<HTMLDivElement>(null);
   const chatCompletion = useCallback(async () => {
@@ -164,12 +162,6 @@ const ChatPage = () => {
             </Container>
           )}
         </Box>
-        {error && (
-          <Alert variant="filled" severity="error">
-            <AlertTitle>{error.code}</AlertTitle>
-            {error.message}
-          </Alert>
-        )}
         <TextField
           fullWidth
           placeholder="Message ChatGPT..."
