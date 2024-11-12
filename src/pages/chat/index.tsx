@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import app from '@app/info';
 import {
+  Alert,
   ArrowCircleUpOutlined,
   DrawOutlined,
   FormatIndentIncreaseOutlined,
@@ -25,7 +26,7 @@ import { global } from '@/store/global';
 
 const ChatPage = () => {
   const { menuOpen } = global;
-  const { messages, activeId, stream } = chat;
+  const { messages, activeId, stream, error } = chat;
   const inp = useRef<HTMLInputElement>(null);
   const docu = useRef<HTMLDivElement>(null);
   const chatCompletion = useCallback(async () => {
@@ -162,6 +163,9 @@ const ChatPage = () => {
             </Container>
           )}
         </Box>
+        {error?.message && <Alert variant="filled" severity="error">
+          {error.code}: {error.message}
+        </Alert>}
         <TextField
           fullWidth
           placeholder="Message ChatGPT..."
