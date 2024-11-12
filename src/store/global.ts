@@ -21,10 +21,12 @@ export const global = sso({
   OPENROUTER_API_KEY: DEFAULT_OPENROUTER_KEY,
   apiModal: !DEFAULT_OPENROUTER_KEY,
   // 错误信息
-  error: void 0 as {
-    message: string;
-    code: number;
-  } | undefined,
+  error: void 0 as
+    | {
+        message: string;
+        code: number;
+      }
+    | undefined,
   closeModal() {
     global.apiModal = false;
   },

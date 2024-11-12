@@ -1,4 +1,4 @@
-import { PACKAGENAME, type ConfigType } from '@moneko/core';
+import { type ConfigType, PACKAGENAME } from '@moneko/core';
 
 const conf: Partial<ConfigType> = {
   basename: `/${PACKAGENAME}/`,
